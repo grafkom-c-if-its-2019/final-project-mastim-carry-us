@@ -1,5 +1,6 @@
 console.log('loaded');
 var cancelled;
+var kalah = 0;
 // set seconds
 var secs;
 // calculate the seconds (don't change this! unless time progresses at a different speed for you...)
@@ -29,12 +30,20 @@ function Decrement() {
         setTimeout('Decrement()',1);
     }
     else {
-        alert("CUPU");
-        document.location.reload();
-        score = 0;
+        kalah = 1;
+        kalahlaert();
         // console.log('CHECKPOINT')
     }
 }
+function kalahlaert() {
+    if(kalah == 1) {
+        alert("CUPU");
+        document.location.reload();
+        score = 0;
+        kalah = 0;
+    }
+}
+
 function countdown() {
     secs = 3;
     milsecs = secs * 1000;
