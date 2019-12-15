@@ -427,7 +427,6 @@
                     jalan = 0;
                 }
             }
-<<<<<<< HEAD
             console.log(numOfNot);
             perintah = arrow[posPerintah];
             text += arrow[posPerintah];
@@ -435,8 +434,6 @@
             updateText(text);
             removeText(mesh2);
             updateScore();
-=======
->>>>>>> 2f99bb4ce72b41f49f5879f6c75e89b076766084
             // scene.remove(mesh);
             // text.
         }
