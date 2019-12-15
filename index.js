@@ -427,13 +427,6 @@
                     jalan = 0;
                 }
             }
-            console.log(numOfNot);
-            perintah = arrow[posPerintah];
-            text += arrow[posPerintah];
-            console.log(text);
-            updateText(text);
-            removeText(mesh2);
-            updateScore();
             // scene.remove(mesh);
             // text.
         }
