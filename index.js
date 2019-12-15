@@ -12,11 +12,13 @@
     var score = 0;
     var textMaterial;
     var mesh;
+    // var secs = 3;
     console.log(text);
 
     var loader4 = new THREE.GLTFLoader();
     var mixer;
     var mesh3;
+    var mesh4;
 
     var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
     scene.add(camera);
@@ -134,6 +136,7 @@
         // mesh.position.x = -3.5;
         mesh2.position.z = 13;
         mesh2.position.y = 8;
+        mesh2.position.x = -4;
 
         mesh2.rotation.x -= Math.PI / 2;
 
@@ -141,6 +144,52 @@
     }
 
     load_font2();
+
+    
+    function resetTimer() {
+        timer();
+    }
+
+    function load_font3() {
+        var loader3 = new THREE.FontLoader();
+        loader3.load('fonts/helvetiker_regular.typeface.json', function( res ) {
+            font = res;
+            console.log(res)
+            timer();
+        });
+    }
+
+    function timer() {
+        countdown();
+        var textGeometry3 = new THREE.TextGeometry('Time: '+ dispsec, {
+            font : font,
+            size : 1,
+            height: 0.1,
+            curveSegments: 0,
+            bevelThickness: 0,
+            bevelSize: 0,
+            bevelEnabled: false
+        });
+        textGeometry3.computeBoundingBox();
+        textGeometry3.center();
+
+        textMaterial3 = new THREE.MeshLambertMaterial( 
+            { color: 0xffffff, specular: 0xffffff }
+        );
+
+        mesh4 = new THREE.Mesh( textGeometry3, textMaterial3 );
+
+        // mesh.position.x = -3.5;
+        mesh4.position.z = 13;
+        mesh4.position.y = 8;
+        mesh4.position.x = 4;
+
+        mesh4.rotation.x -= Math.PI / 2;
+
+        scene.add( mesh4 );
+    }
+
+    load_font3();
 
     loader4.load('assets/scene.gltf', function (gltf){
        
@@ -210,21 +259,25 @@
                     rotateLeft = true;
                     score += 1;
                     removeText(mesh);
+                    //resetTimer();
                 }
                 else if(keyCode == 39 && degree == 0 && perintah[0] == 'R') {
                     rotateRight = true;
                     score += 1;
                     removeText(mesh);
+                    //resetTimer();
                 }
                 else if(keyCode == 38 && degree == 0 && perintah[0] == 'U') {
                     rotateTop = true;
                     score += 1;
                     removeText(mesh);
+                    //resetTimer();
                 }
                 else if(keyCode == 40 && degree == 0 && perintah[0] == 'B') {
                     rotateBottom = true;
                     score += 1;
                     removeText(mesh);
+                    //resetTimer();
                 }
                 else {
                     alert("CUPU");
@@ -238,21 +291,25 @@
                     rotateLeft = true;
                     score += 1;
                     removeText(mesh);
+                    //resetTimer();
                 }
                 else if(keyCode == 39 && degree == 0 && perintah[0] != 'R') {
                     rotateRight = true;
                     score += 1;
                     removeText(mesh);
+                    //resetTimer();
                 }
                 else if(keyCode == 38 && degree == 0 && perintah[0] != 'U') {
                     rotateTop = true;
                     score += 1;
                     removeText(mesh);
+                    //resetTimer();
                 }
                 else if(keyCode == 40 && degree == 0 && perintah[0] != 'B') {
                     rotateBottom = true;
                     score += 1;
                     removeText(mesh);
+                    //resetTimer();
                 }
                 else {
                     alert("CUPU");
@@ -400,7 +457,9 @@
                 console.log(text);
                 updateText(text);
                 removeText(mesh2);
+                removeText(mesh4);
                 updateScore();
+                resetTimer();
             }
             else if(puter == 1) {
                 circle.visible = true;
