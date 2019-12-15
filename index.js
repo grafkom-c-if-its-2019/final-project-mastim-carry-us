@@ -10,6 +10,8 @@
     var text = perintah;
     var numOfNot = 0;
     var score = 0;
+    var textMaterial;
+    var mesh;
     console.log(text);
 
     var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -27,6 +29,54 @@
     camera.position.z = 20;
     camera.lookAt(scene.position);
 
+    function load_font(textCube) {
+        var loader2 = new THREE.FontLoader();
+        loader2.load('fonts/helvetiker_regular.typeface.json', function( res ) {
+            font = res;
+            createText(textCube);
+        });
+    }
+
+    function createText(textCube) {
+        var textGeometry = new THREE.TextGeometry(textCube, {
+            font : font,
+            size : 1,
+            height: 0.1,
+            curveSegments: 0,
+            bevelThickness: 0,
+            bevelSize: 0,
+            bevelEnabled: false
+        });
+        textGeometry.computeBoundingBox();
+        textGeometry.center();
+
+        textMaterial = new THREE.MeshLambertMaterial( 
+            { color: 0xffffff, specular: 0xffffff }
+        );
+
+        mesh = new THREE.Mesh( textGeometry, textMaterial );
+
+        // mesh.position.x = -3.5;
+        mesh.position.z = 0;
+        mesh.position.y = 6;
+
+        mesh.rotation.x -= Math.PI / 2;
+
+        scene.add( mesh );
+    }
+
+    load_font(text);
+
+    function removeText(object) {
+        scene.remove(object);
+        object.geometry.dispose();
+        object.material.dispose();
+        object = undefined;
+    }
+    function updateText(textCube) {
+        // removeText(mesh);
+        createText(textCube);
+    }
     var cubeGeometry = new THREE.BoxGeometry(12, 12, 12);
     var meshMaterial = new THREE.MeshLambertMaterial({color: 0x171717});
     // var cubeMaterials = [
@@ -90,21 +140,27 @@
                 if (keyCode == 37 && degree == 0 && perintah[0] == 'L') {
                     rotateLeft = true;
                     score += 1;
+                    removeText(mesh);
                 }
                 else if(keyCode == 39 && degree == 0 && perintah[0] == 'R') {
                     rotateRight = true;
                     score += 1;
+                    removeText(mesh);
                 }
                 else if(keyCode == 38 && degree == 0 && perintah[0] == 'U') {
                     rotateTop = true;
                     score += 1;
+                    removeText(mesh);
                 }
                 else if(keyCode == 40 && degree == 0 && perintah[0] == 'B') {
                     rotateBottom = true;
                     score += 1;
+                    removeText(mesh);
                 }
                 else {
-                    console.log("Mati");
+                    alert("CUPU");
+                    document.location.reload();
+                    // clearInterval(interval);
                     score = 0;
                 }
             }
@@ -112,21 +168,27 @@
                 if (keyCode == 37 && degree == 0 && perintah[0] != 'L') {
                     rotateLeft = true;
                     score += 1;
+                    removeText(mesh);
                 }
                 else if(keyCode == 39 && degree == 0 && perintah[0] != 'R') {
                     rotateRight = true;
                     score += 1;
+                    removeText(mesh);
                 }
                 else if(keyCode == 38 && degree == 0 && perintah[0] != 'U') {
                     rotateTop = true;
                     score += 1;
+                    removeText(mesh);
                 }
                 else if(keyCode == 40 && degree == 0 && perintah[0] != 'B') {
                     rotateBottom = true;
                     score += 1;
+                    removeText(mesh);
                 }
                 else {
-                    console.log("Mati");
+                    alert("CUPU");
+                    document.location.reload();
+                    // clearInterval(interval);
                     score = 0;
                 }
             }
@@ -134,6 +196,12 @@
         }
         event.preventDefault();
     };
+
+//     var loader3 = new THREE.glTFLoader();
+//     loader3.load('../assets/textures/Nature.Chicken_diffuse.gltf', function (scene) {
+//         console.log(scene);
+// //            scene.add(mesh);
+//     });
 
     // var directionalLight = new THREE.DirectionalLight( 0xFFFFFF, 0.8 );
     // directionalLight.position.set(15, 16, 15 );
@@ -209,6 +277,9 @@
             perintah = arrow[posPerintah];
             text += arrow[posPerintah];
             console.log(text);
+            updateText(text);
+            // scene.remove(mesh);
+            // text.
         }
         renderer.render(scene, camera);
     }
