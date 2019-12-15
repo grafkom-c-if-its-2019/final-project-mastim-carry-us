@@ -1,8 +1,16 @@
 (function() {
     const loader = new THREE.TextureLoader();
+    var arrow = ['Up', 'Bottom', 'Right', 'Left'];
+    var notNot = ['Not'];
     var bgTexture = loader.load('Image/2738574.jpg');
     var scene = new THREE.Scene();
     scene.background = bgTexture;
+    var posPerintah = Math.floor(Math.random() * 4);
+    var perintah = arrow[posPerintah];
+    var text = perintah;
+    var numOfNot = 0;
+    var score = 0;
+    console.log(text);
 
     var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
     scene.add(camera);
@@ -76,18 +84,53 @@
     function onDocumentKeyDown(event) {
         var keyCode = event.which;
         clicked += 1
-        console.log(clicked);
-        if (keyCode == 37 && degree == 0 && clicked == 1) {
-            rotateLeft = true;
-        }
-        else if(keyCode == 39 && degree == 0 && clicked == 1) {
-            rotateRight = true;
-        }
-        else if(keyCode == 38 && degree == 0 && clicked == 1) {
-            rotateTop = true;
-        }
-        else if(keyCode == 40 && degree == 0 && clicked == 1) {
-            rotateBottom = true;
+        // console.log(clicked);
+        if(clicked == 1) {
+            if(numOfNot % 2 == 0) {
+                if (keyCode == 37 && degree == 0 && perintah[0] == 'L') {
+                    rotateLeft = true;
+                    score += 1;
+                }
+                else if(keyCode == 39 && degree == 0 && perintah[0] == 'R') {
+                    rotateRight = true;
+                    score += 1;
+                }
+                else if(keyCode == 38 && degree == 0 && perintah[0] == 'U') {
+                    rotateTop = true;
+                    score += 1;
+                }
+                else if(keyCode == 40 && degree == 0 && perintah[0] == 'B') {
+                    rotateBottom = true;
+                    score += 1;
+                }
+                else {
+                    console.log("Mati");
+                    score = 0;
+                }
+            }
+            else {
+                if (keyCode == 37 && degree == 0 && perintah[0] != 'L') {
+                    rotateLeft = true;
+                    score += 1;
+                }
+                else if(keyCode == 39 && degree == 0 && perintah[0] != 'R') {
+                    rotateRight = true;
+                    score += 1;
+                }
+                else if(keyCode == 38 && degree == 0 && perintah[0] != 'U') {
+                    rotateTop = true;
+                    score += 1;
+                }
+                else if(keyCode == 40 && degree == 0 && perintah[0] != 'B') {
+                    rotateBottom = true;
+                    score += 1;
+                }
+                else {
+                    console.log("Mati");
+                    score = 0;
+                }
+            }
+            console.log(score);
         }
         event.preventDefault();
     };
@@ -153,6 +196,19 @@
             rotateTop = false;
             rotateBottom = false;
             degree = 0;
+            posPerintah = Math.floor(Math.random() * 4);
+            numOfNot = Math.floor(Math.random() * 4);
+            text = "";
+            var now = 0;
+            while(now < numOfNot) {
+                text += notNot[0];
+                now += 1;
+                text += "\n";
+            }
+            console.log(numOfNot);
+            perintah = arrow[posPerintah];
+            text += arrow[posPerintah];
+            console.log(text);
         }
         renderer.render(scene, camera);
     }
