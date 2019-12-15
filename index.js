@@ -57,8 +57,8 @@
         mesh = new THREE.Mesh( textGeometry, textMaterial );
 
         // mesh.position.x = -3.5;
-        mesh.position.z = 0;
-        mesh.position.y = 6;
+        mesh.position.z = 0.5;
+        mesh.position.y = 7;
 
         mesh.rotation.x -= Math.PI / 2;
 
@@ -164,6 +164,14 @@
     scene.add( spotLight3.target );
     scene.add( spotLight3 );
 
+    var circleGeometry = new THREE.CircleGeometry(0.4, 32);
+    var circleMaterial = new THREE.MeshBasicMaterial({color: 0xffff00, transparent: true, opacity: 0.3});
+    var circle = new THREE.Mesh(circleGeometry, circleMaterial);
+    circle.position.y = 6.5;
+    circle.position.z = 0.25;
+    circle.rotation.x -= Math.PI / 2;
+    scene.add(circle);
+
     document.addEventListener("keydown", onDocumentKeyDown, false);
     document.addEventListener("keyup", onDocumentKeyUp, false);
     var rotateLeft = false, rotateRight, rotateTop, rotateBottom;
@@ -183,25 +191,21 @@
                     rotateLeft = true;
                     score += 1;
                     removeText(mesh);
-                    removeText(mesh2);
                 }
                 else if(keyCode == 39 && degree == 0 && perintah[0] == 'R') {
                     rotateRight = true;
                     score += 1;
                     removeText(mesh);
-                    removeText(mesh2);
                 }
                 else if(keyCode == 38 && degree == 0 && perintah[0] == 'U') {
                     rotateTop = true;
                     score += 1;
                     removeText(mesh);
-                    removeText(mesh2);
                 }
                 else if(keyCode == 40 && degree == 0 && perintah[0] == 'B') {
                     rotateBottom = true;
                     score += 1;
                     removeText(mesh);
-                    removeText(mesh2);
                 }
                 else {
                     alert("CUPU");
@@ -215,25 +219,21 @@
                     rotateLeft = true;
                     score += 1;
                     removeText(mesh);
-                    removeText(mesh2);
                 }
                 else if(keyCode == 39 && degree == 0 && perintah[0] != 'R') {
                     rotateRight = true;
                     score += 1;
                     removeText(mesh);
-                    removeText(mesh2);
                 }
                 else if(keyCode == 38 && degree == 0 && perintah[0] != 'U') {
                     rotateTop = true;
                     score += 1;
                     removeText(mesh);
-                    removeText(mesh2);
                 }
                 else if(keyCode == 40 && degree == 0 && perintah[0] != 'B') {
                     rotateBottom = true;
                     score += 1;
                     removeText(mesh);
-                    removeText(mesh2);
                 }
                 else {
                     alert("CUPU");
@@ -247,88 +247,167 @@
         event.preventDefault();
     };
 
-//     var loader3 = new THREE.glTFLoader();
-//     loader3.load('../assets/textures/Nature.Chicken_diffuse.gltf', function (scene) {
-//         console.log(scene);
-// //            scene.add(mesh);
-//     });
-
-    // var directionalLight = new THREE.DirectionalLight( 0xFFFFFF, 0.8 );
-    // directionalLight.position.set(15, 16, 15 );
-    // directionalLight.castShadow = true;
-    // scene.add( directionalLight );
+    var puter = 0, jalan = 0;
+  
     render();
     function render() {
         requestAnimationFrame(render);
         if(rotateTop && degree < Math.PI / 2) {
-            var deltaRotationQuaternion = new THREE.Quaternion()
-            .setFromEuler(new THREE.Euler(
-                Math.PI / 2 / 50,
-                0,
-                0,
-                'XYZ'
-            ));
-        
-            cube.quaternion.multiplyQuaternions(deltaRotationQuaternion, cube.quaternion);
-            degree += Math.PI / 2 / 50;
+            if(puter == 1) {
+                jalan = 0;
+                var deltaRotationQuaternion = new THREE.Quaternion()
+                .setFromEuler(new THREE.Euler(
+                    Math.PI / 2 / 25,
+                    0,
+                    0,
+                    'XYZ'
+                ));
+            
+                cube.quaternion.multiplyQuaternions(deltaRotationQuaternion, cube.quaternion);
+                degree += Math.PI / 2 / 25;
+            }
+            else if(puter == 0) {
+                if(jalan < 25) {
+                    circle.position.z -= 6 / 25;
+                    jalan += 1;
+                }
+                else {
+                    circle.position.z = 6;
+                    puter = 1;
+                    circle.visible = false;
+                }
+            }
         }
         else if(rotateBottom && degree < Math.PI / 2) {
-            var deltaRotationQuaternion = new THREE.Quaternion()
-            .setFromEuler(new THREE.Euler(
-                -Math.PI / 2 / 50,
-                0,
-                0,
-                'XYZ'
-            ));
-        
-        cube.quaternion.multiplyQuaternions(deltaRotationQuaternion, cube.quaternion);
-            degree += Math.PI / 2 / 50;
+            if(puter == 1) {
+                jalan = 0;
+                var deltaRotationQuaternion = new THREE.Quaternion()
+                .setFromEuler(new THREE.Euler(
+                    -Math.PI / 2 / 25,
+                    0,
+                    0,
+                    'XYZ'
+                ));
+            
+                cube.quaternion.multiplyQuaternions(deltaRotationQuaternion, cube.quaternion);
+                degree += Math.PI / 2 / 25;
+            }
+            else if(puter == 0) {
+                if(jalan < 25) {
+                    circle.position.z += 6 / 25;
+                    jalan += 1;
+                }
+                else {
+                    circle.position.z = -6;
+                    puter = 1;
+                    circle.visible = false;
+                }
+            }
+            
         }
         else if(rotateLeft && degree < Math.PI / 2) {
-            var deltaRotationQuaternion = new THREE.Quaternion()
-            .setFromEuler(new THREE.Euler(
-                0,
-                0,
-                -Math.PI / 2 / 50,
-                'XYZ'
-            ));
-        
-            cube.quaternion.multiplyQuaternions(deltaRotationQuaternion, cube.quaternion);
-            degree += Math.PI / 2 / 50;
+            if(puter == 1) {
+                jalan = 0;
+                var deltaRotationQuaternion = new THREE.Quaternion()
+                .setFromEuler(new THREE.Euler(
+                    0,
+                    0,
+                    -Math.PI / 2 / 25,
+                    'XYZ'
+                ));
+            
+                cube.quaternion.multiplyQuaternions(deltaRotationQuaternion, cube.quaternion);
+                degree += Math.PI / 2 / 25;
+            }
+            else if(puter == 0) {
+                if(jalan < 25) {
+                    jalan += 1;
+                    circle.position.x -= 6 / 25;
+                }
+                else {
+                    circle.position.x = 6;
+                    puter = 1;
+                    circle.visible = false;
+                }
+            }
+            
         }
         else if(rotateRight && degree < Math.PI / 2) {
-            var deltaRotationQuaternion = new THREE.Quaternion()
-            .setFromEuler(new THREE.Euler(
-                0,
-                0,
-                Math.PI / 2 / 50,
-                'XYZ'
-            ));
-        
-            cube.quaternion.multiplyQuaternions(deltaRotationQuaternion, cube.quaternion);
-            degree += Math.PI / 2 / 50;
+            if(puter == 1) {
+                jalan = 0;
+                var deltaRotationQuaternion = new THREE.Quaternion()
+                .setFromEuler(new THREE.Euler(
+                    0,
+                    0,
+                    Math.PI / 2 / 25,
+                    'XYZ'
+                ));
+            
+                cube.quaternion.multiplyQuaternions(deltaRotationQuaternion, cube.quaternion);
+                degree += Math.PI / 2 / 25;
+            }
+            else if(puter == 0) {
+                if(jalan < 25) {
+                    jalan += 1;
+                    circle.position.x += 6 / 25;
+                }
+                else {
+                    circle.position.x = -6;
+                    puter = 1;
+                    circle.visible = false;
+                }
+            }
+            
         }
         if(degree >= Math.PI / 2) {
-            rotateLeft = false;
-            rotateRight = false;
-            rotateTop = false;
-            rotateBottom = false;
-            degree = 0;
-            posPerintah = Math.floor(Math.random() * 4);
-            numOfNot = Math.floor(Math.random() * 4);
-            text = "";
-            var now = 0;
-            while(now < numOfNot) {
-                text += notNot[0];
-                now += 1;
-                text += "\n";
+            if(puter == 0) {
+                rotateLeft = false;
+                rotateRight = false;
+                rotateTop = false;
+                rotateBottom = false;
+                degree = 0;
+                posPerintah = Math.floor(Math.random() * 4);
+                numOfNot = Math.floor(Math.random() * 4);
+                text = "";
+                var now = 0;
+                while(now < numOfNot) {
+                    text += notNot[0];
+                    now += 1;
+                    text += "\n";
+                }
+                console.log(numOfNot);
+                perintah = arrow[posPerintah];
+                text += arrow[posPerintah];
+                console.log(text);
+                updateText(text);
+                removeText(mesh2);
+                updateScore();
             }
-            console.log(numOfNot);
-            perintah = arrow[posPerintah];
-            text += arrow[posPerintah];
-            console.log(text);
-            updateText(text);
-            updateScore();
+            else if(puter == 1) {
+                circle.visible = true;
+                if(jalan < 25) {
+                    if(rotateTop) {
+                        circle.position.z -= 6 / 25;
+                        jalan += 1;
+                    }
+                    else if(rotateBottom) {
+                        circle.position.z += 6 / 25;
+                        jalan += 1;
+                    }
+                    else if(rotateLeft) {
+                        circle.position.x -= 6 / 25;
+                        jalan += 1;
+                    }
+                    else if(rotateRight) {
+                        circle.position.x += 6 / 25;
+                        jalan += 1;
+                    }
+                }
+                else {
+                    puter = 0;
+                    jalan = 0;
+                }
+            }
             // scene.remove(mesh);
             // text.
         }
