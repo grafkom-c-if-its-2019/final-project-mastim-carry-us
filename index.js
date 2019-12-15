@@ -14,6 +14,10 @@
     var mesh;
     console.log(text);
 
+    var loader4 = new THREE.GLTFLoader();
+    var mixer;
+    var mesh3;
+
     var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
     scene.add(camera);
 
@@ -137,6 +141,21 @@
     }
 
     load_font2();
+
+    loader4.load('assets/scene.gltf', function (gltf){
+       
+        mesh3 = gltf.scene;
+        // mesh.name = this.body.id.toString();
+        mesh3.scale.set(10,10,10);
+        mesh3.position.y=7;
+       
+        scene.add(mesh3);
+        mixer = new THREE.AnimationMixer(mesh3);
+        mixer.clipAction( gltf.animations[0] ).play();
+
+    }, undefined, function (e) {
+        console.error(e);
+    });
 
     // var geometry = new THREE.BoxBufferGeometry( 10, 10, 10 );
     // var edges = new THREE.EdgesGeometry( geometry );
@@ -408,6 +427,16 @@
                     jalan = 0;
                 }
             }
+<<<<<<< HEAD
+            console.log(numOfNot);
+            perintah = arrow[posPerintah];
+            text += arrow[posPerintah];
+            console.log(text);
+            updateText(text);
+            removeText(mesh2);
+            updateScore();
+=======
+>>>>>>> 2f99bb4ce72b41f49f5879f6c75e89b076766084
             // scene.remove(mesh);
             // text.
         }
