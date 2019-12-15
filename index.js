@@ -55,13 +55,13 @@
         textGeometry.center();
 
         textMaterial = new THREE.MeshLambertMaterial( 
-            { color: 0xffffff, specular: 0xffffff }
+            { color: 0x006fff, specular: 0xffffff }
         );
 
         mesh = new THREE.Mesh( textGeometry, textMaterial );
 
         // mesh.position.x = -3.5;
-        mesh.position.z = 0.5;
+        mesh.position.z = 1;
         mesh.position.y = 7;
 
         mesh.rotation.x -= Math.PI / 2;
@@ -146,9 +146,10 @@
        
         mesh3 = gltf.scene;
         // mesh.name = this.body.id.toString();
-        mesh3.scale.set(10,10,10);
-        mesh3.position.y=7;
-       
+        mesh3.scale.set(4,4,4);
+        mesh3.position.y=6.5;
+        mesh3.position.z = 5;
+        mesh3.rotation.y += Math.PI;
         scene.add(mesh3);
         mixer = new THREE.AnimationMixer(mesh3);
         mixer.clipAction( gltf.animations[0] ).play();
@@ -183,14 +184,6 @@
     scene.add( spotLight3.target );
     scene.add( spotLight3 );
 
-    var circleGeometry = new THREE.CircleGeometry(0.4, 32);
-    var circleMaterial = new THREE.MeshBasicMaterial({color: 0xffff00, transparent: true, opacity: 0.3});
-    var circle = new THREE.Mesh(circleGeometry, circleMaterial);
-    circle.position.y = 6.5;
-    circle.position.z = 0.25;
-    circle.rotation.x -= Math.PI / 2;
-    scene.add(circle);
-
     document.addEventListener("keydown", onDocumentKeyDown, false);
     document.addEventListener("keyup", onDocumentKeyUp, false);
     var rotateLeft = false, rotateRight, rotateTop, rotateBottom;
@@ -207,11 +200,13 @@
         if(clicked == 1) {
             if(numOfNot % 2 == 0) {
                 if (keyCode == 37 && degree == 0 && perintah[0] == 'L') {
+                    mesh3.rotation.y += Math.PI / 2;
                     rotateLeft = true;
                     score += 1;
                     removeText(mesh);
                 }
                 else if(keyCode == 39 && degree == 0 && perintah[0] == 'R') {
+                    mesh3.rotation.y -= Math.PI / 2;
                     rotateRight = true;
                     score += 1;
                     removeText(mesh);
@@ -222,6 +217,7 @@
                     removeText(mesh);
                 }
                 else if(keyCode == 40 && degree == 0 && perintah[0] == 'B') {
+                    mesh3.rotation.y += Math.PI;
                     rotateBottom = true;
                     score += 1;
                     removeText(mesh);
@@ -235,11 +231,13 @@
             }
             else {
                 if (keyCode == 37 && degree == 0 && perintah[0] != 'L') {
+                    mesh3.rotation.y += Math.PI / 2;
                     rotateLeft = true;
                     score += 1;
                     removeText(mesh);
                 }
                 else if(keyCode == 39 && degree == 0 && perintah[0] != 'R') {
+                    mesh3.rotation.y -= Math.PI / 2;
                     rotateRight = true;
                     score += 1;
                     removeText(mesh);
@@ -250,6 +248,7 @@
                     removeText(mesh);
                 }
                 else if(keyCode == 40 && degree == 0 && perintah[0] != 'B') {
+                    mesh3.rotation.y += Math.PI;
                     rotateBottom = true;
                     score += 1;
                     removeText(mesh);
@@ -287,13 +286,13 @@
             }
             else if(puter == 0) {
                 if(jalan < 25) {
-                    circle.position.z -= 6 / 25;
+                    mesh3.position.z -= 11 / 25;
                     jalan += 1;
                 }
                 else {
-                    circle.position.z = 6;
+                    mesh3.position.z = 6;
                     puter = 1;
-                    circle.visible = false;
+                    mesh3.visible = false;
                 }
             }
         }
@@ -313,13 +312,13 @@
             }
             else if(puter == 0) {
                 if(jalan < 25) {
-                    circle.position.z += 6 / 25;
+                    mesh3.position.z += 1 / 25;
                     jalan += 1;
                 }
                 else {
-                    circle.position.z = -6;
+                    mesh3.position.z = -6;
                     puter = 1;
-                    circle.visible = false;
+                    mesh3.visible = false;
                 }
             }
             
@@ -341,12 +340,12 @@
             else if(puter == 0) {
                 if(jalan < 25) {
                     jalan += 1;
-                    circle.position.x -= 6 / 25;
+                    mesh3.position.x -= 6 / 25;
                 }
                 else {
-                    circle.position.x = 6;
+                    mesh3.position.x = 6;
                     puter = 1;
-                    circle.visible = false;
+                    mesh3.visible = false;
                 }
             }
             
@@ -368,18 +367,27 @@
             else if(puter == 0) {
                 if(jalan < 25) {
                     jalan += 1;
-                    circle.position.x += 6 / 25;
+                    mesh3.position.x += 6 / 25;
                 }
                 else {
-                    circle.position.x = -6;
+                    mesh3.position.x = -6;
                     puter = 1;
-                    circle.visible = false;
+                    mesh3.visible = false;
                 }
             }
             
         }
         if(degree >= Math.PI / 2) {
             if(puter == 0) {
+                if(rotateBottom) {
+                    mesh3.rotation.y += Math.PI;
+                }
+                else if(rotateLeft) {
+                    mesh3.rotation.y -= Math.PI / 2;
+                }
+                else if(rotateRight) {
+                    mesh3.rotation.y += Math.PI / 2;
+                }
                 rotateLeft = false;
                 rotateRight = false;
                 rotateTop = false;
@@ -403,22 +411,22 @@
                 updateScore();
             }
             else if(puter == 1) {
-                circle.visible = true;
+                mesh3.visible = true;
                 if(jalan < 25) {
                     if(rotateTop) {
-                        circle.position.z -= 6 / 25;
+                        mesh3.position.z -= 1 / 25;
                         jalan += 1;
                     }
                     else if(rotateBottom) {
-                        circle.position.z += 6 / 25;
+                        mesh3.position.z += 11 / 25;
                         jalan += 1;
                     }
                     else if(rotateLeft) {
-                        circle.position.x -= 6 / 25;
+                        mesh3.position.x -= 6 / 25;
                         jalan += 1;
                     }
                     else if(rotateRight) {
-                        circle.position.x += 6 / 25;
+                        mesh3.position.x += 6 / 25;
                         jalan += 1;
                     }
                 }
