@@ -1,7 +1,7 @@
 (function() {
     const loader = new THREE.TextureLoader();
-    var arrow = ['Up', 'Bottom', 'Right', 'Left'];
-    var notNot = ['Not'];
+    var arrow = ['UP', 'BOTTOM', 'RIGHT', 'LEFT'];
+    var notNot = ['NOT'];
     var bgTexture = loader.load('Image/2738574.jpg');
     var scene = new THREE.Scene();
     scene.background = bgTexture;
@@ -96,6 +96,48 @@
 
     scene.add(cube);
 
+    function updateScore() {
+        scoreboard();
+    }
+
+    function load_font2() {
+        var loader2 = new THREE.FontLoader();
+        loader2.load('fonts/helvetiker_regular.typeface.json', function( res ) {
+            font = res;
+            scoreboard();
+        });
+    }
+
+    function scoreboard() {
+        var textGeometry2 = new THREE.TextGeometry('Score: '+ score, {
+            font : font,
+            size : 1,
+            height: 0.1,
+            curveSegments: 0,
+            bevelThickness: 0,
+            bevelSize: 0,
+            bevelEnabled: false
+        });
+        textGeometry2.computeBoundingBox();
+        textGeometry2.center();
+
+        textMaterial2 = new THREE.MeshLambertMaterial( 
+            { color: 0xffffff, specular: 0xffffff }
+        );
+
+        mesh2 = new THREE.Mesh( textGeometry2, textMaterial2 );
+
+        // mesh.position.x = -3.5;
+        mesh2.position.z = 13;
+        mesh2.position.y = 8;
+
+        mesh2.rotation.x -= Math.PI / 2;
+
+        scene.add( mesh2 );
+    }
+
+    load_font2();
+
     // var geometry = new THREE.BoxBufferGeometry( 10, 10, 10 );
     // var edges = new THREE.EdgesGeometry( geometry );
     // var line = new THREE.LineSegments( edges, new THREE.LineBasicMaterial( { color: 0xffffff } ) );
@@ -141,21 +183,25 @@
                     rotateLeft = true;
                     score += 1;
                     removeText(mesh);
+                    removeText(mesh2);
                 }
                 else if(keyCode == 39 && degree == 0 && perintah[0] == 'R') {
                     rotateRight = true;
                     score += 1;
                     removeText(mesh);
+                    removeText(mesh2);
                 }
                 else if(keyCode == 38 && degree == 0 && perintah[0] == 'U') {
                     rotateTop = true;
                     score += 1;
                     removeText(mesh);
+                    removeText(mesh2);
                 }
                 else if(keyCode == 40 && degree == 0 && perintah[0] == 'B') {
                     rotateBottom = true;
                     score += 1;
                     removeText(mesh);
+                    removeText(mesh2);
                 }
                 else {
                     alert("CUPU");
@@ -169,21 +215,25 @@
                     rotateLeft = true;
                     score += 1;
                     removeText(mesh);
+                    removeText(mesh2);
                 }
                 else if(keyCode == 39 && degree == 0 && perintah[0] != 'R') {
                     rotateRight = true;
                     score += 1;
                     removeText(mesh);
+                    removeText(mesh2);
                 }
                 else if(keyCode == 38 && degree == 0 && perintah[0] != 'U') {
                     rotateTop = true;
                     score += 1;
                     removeText(mesh);
+                    removeText(mesh2);
                 }
                 else if(keyCode == 40 && degree == 0 && perintah[0] != 'B') {
                     rotateBottom = true;
                     score += 1;
                     removeText(mesh);
+                    removeText(mesh2);
                 }
                 else {
                     alert("CUPU");
@@ -278,6 +328,7 @@
             text += arrow[posPerintah];
             console.log(text);
             updateText(text);
+            updateScore();
             // scene.remove(mesh);
             // text.
         }
