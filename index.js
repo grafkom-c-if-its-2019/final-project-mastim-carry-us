@@ -1,0 +1,160 @@
+(function() {
+    const loader = new THREE.TextureLoader();
+    var bgTexture = loader.load('Image/2738574.jpg');
+    var scene = new THREE.Scene();
+    scene.background = bgTexture;
+
+    var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+    scene.add(camera);
+
+    var renderer = new THREE.WebGLRenderer();
+    renderer.setClearColor(new THREE.Color(1, 1, 0));
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.shadowMapEnabled = true;
+
+    document.getElementById("WebGL-output").appendChild(renderer.domElement);
+
+    camera.position.x = 0;
+    camera.position.y = 35;
+    camera.position.z = 20;
+    camera.lookAt(scene.position);
+
+    var cubeGeometry = new THREE.BoxGeometry(12, 12, 12);
+    var meshMaterial = new THREE.MeshLambertMaterial({color: 0x171717});
+    // var cubeMaterials = [
+    //     new THREE.MeshLambertMaterial({color: 000000}), // Right
+    //     new THREE.MeshLambertMaterial({color: 0x0f0f0f}), // Left
+    //     new THREE.MeshLambertMaterial({color: 0xff00ff}), // Top
+    //     new THREE.MeshLambertMaterial({color: 000000}), // Bottom
+    //     new THREE.MeshLambertMaterial({color: 0xffffff}), // Front
+    //     new THREE.MeshLambertMaterial({color: 0x00ff00}), // Back
+    // ]
+    // var cubeMaterial = new THREE.MeshFaceMaterial(cubeMaterials);
+    var cube = new THREE.Mesh(cubeGeometry, meshMaterial);
+
+    cube.position.x = 0;
+    cube.position.y = 0;
+    cube.position.z = 0;
+
+    scene.add(cube);
+
+    // var geometry = new THREE.BoxBufferGeometry( 10, 10, 10 );
+    // var edges = new THREE.EdgesGeometry( geometry );
+    // var line = new THREE.LineSegments( edges, new THREE.LineBasicMaterial( { color: 0xffffff } ) );
+    // scene.add( line );
+
+    var spotLight = new THREE.SpotLight( 0xFFFFFF, 2);
+    spotLight.position.set( 0, 12.3, 12.3 );
+    spotLight.target.position.set(0, 12, 12 );
+    spotLight.castShadow = true;
+    scene.add( spotLight.target );
+    scene.add( spotLight );
+
+    var spotLight2 = new THREE.SpotLight( 0xFFFFFF, 2);
+    spotLight2.position.set( 12.3, 12.3, 12.3 );
+    spotLight2.target.position.set(12, 12, 12 );
+    spotLight2.castShadow = true;
+    scene.add( spotLight2.target );
+    scene.add( spotLight2 );
+
+    var spotLight3 = new THREE.SpotLight( 0xFFFFFF, 2);
+    spotLight3.position.set( -12.3, 12.3, 12.3 );
+    spotLight3.target.position.set(-12, 12, 12 );
+    spotLight3.castShadow = true;
+    scene.add( spotLight3.target );
+    scene.add( spotLight3 );
+
+    document.addEventListener("keydown", onDocumentKeyDown, false);
+    document.addEventListener("keyup", onDocumentKeyUp, false);
+    var rotateLeft = false, rotateRight, rotateTop, rotateBottom;
+    var clicked = 0;
+    var degree = 0;
+
+    function onDocumentKeyUp(event) {
+        clicked = 0;
+    }
+    function onDocumentKeyDown(event) {
+        var keyCode = event.which;
+        clicked += 1
+        console.log(clicked);
+        if (keyCode == 37 && degree == 0 && clicked == 1) {
+            rotateLeft = true;
+        }
+        else if(keyCode == 39 && degree == 0 && clicked == 1) {
+            rotateRight = true;
+        }
+        else if(keyCode == 38 && degree == 0 && clicked == 1) {
+            rotateTop = true;
+        }
+        else if(keyCode == 40 && degree == 0 && clicked == 1) {
+            rotateBottom = true;
+        }
+        event.preventDefault();
+    };
+
+    // var directionalLight = new THREE.DirectionalLight( 0xFFFFFF, 0.8 );
+    // directionalLight.position.set(15, 16, 15 );
+    // directionalLight.castShadow = true;
+    // scene.add( directionalLight );
+    render();
+    function render() {
+        requestAnimationFrame(render);
+        if(rotateTop && degree < Math.PI / 2) {
+            var deltaRotationQuaternion = new THREE.Quaternion()
+            .setFromEuler(new THREE.Euler(
+                Math.PI / 2 / 50,
+                0,
+                0,
+                'XYZ'
+            ));
+        
+            cube.quaternion.multiplyQuaternions(deltaRotationQuaternion, cube.quaternion);
+            degree += Math.PI / 2 / 50;
+        }
+        else if(rotateBottom && degree < Math.PI / 2) {
+            var deltaRotationQuaternion = new THREE.Quaternion()
+            .setFromEuler(new THREE.Euler(
+                -Math.PI / 2 / 50,
+                0,
+                0,
+                'XYZ'
+            ));
+        
+        cube.quaternion.multiplyQuaternions(deltaRotationQuaternion, cube.quaternion);
+            degree += Math.PI / 2 / 50;
+        }
+        else if(rotateLeft && degree < Math.PI / 2) {
+            var deltaRotationQuaternion = new THREE.Quaternion()
+            .setFromEuler(new THREE.Euler(
+                0,
+                0,
+                -Math.PI / 2 / 50,
+                'XYZ'
+            ));
+        
+            cube.quaternion.multiplyQuaternions(deltaRotationQuaternion, cube.quaternion);
+            degree += Math.PI / 2 / 50;
+        }
+        else if(rotateRight && degree < Math.PI / 2) {
+            var deltaRotationQuaternion = new THREE.Quaternion()
+            .setFromEuler(new THREE.Euler(
+                0,
+                0,
+                Math.PI / 2 / 50,
+                'XYZ'
+            ));
+        
+            cube.quaternion.multiplyQuaternions(deltaRotationQuaternion, cube.quaternion);
+            degree += Math.PI / 2 / 50;
+        }
+        if(degree >= Math.PI / 2) {
+            rotateLeft = false;
+            rotateRight = false;
+            rotateTop = false;
+            rotateBottom = false;
+            degree = 0;
+        }
+        renderer.render(scene, camera);
+    }
+
+})();
