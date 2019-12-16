@@ -12,13 +12,18 @@
     var score = 0;
     var textMaterial;
     var mesh;
+    var gameplay = new Audio('assets/gameplay.mp3');
+    var chicken = new Audio('assets/chicken.wav');
+    var laugh = new Audio('assets/title_laugh.mp3');
     // var secs = 3;
     console.log(text);
+
+    gameplay.play();
 
     var loader4 = new THREE.GLTFLoader();
     var mixer;
     var mesh3;
-    var mesh4;
+    // var mesh4;
 
     var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
     scene.add(camera);
@@ -279,7 +284,8 @@
                     //resetTimer();
                 }
                 else {
-                    alert("KONSENTRASI YA");
+                    laugh.play();
+                    alert("You Died");
                     document.location.reload();
                     // clearInterval(interval);
                     score = 0;
@@ -314,7 +320,8 @@
                     //resetTimer();
                 }
                 else {
-                    alert("FOKUS FOKUS");
+                    laugh.play();
+                    alert("Awas Sekitarmu");
                     document.location.reload();
                     // clearInterval(interval);
                     score = 0;
@@ -334,6 +341,7 @@
         if(coba.style.width == "236px" && masuk == 0) {
             masuk = 1;
             alert("SKOR ANDA " + score);
+            laugh.play();
             document.location.reload();
         }
         if(rotateTop && degree < Math.PI / 2) {
@@ -482,6 +490,7 @@
                 // removeText(mesh4);
                 updateScore();
                 resetTimer();
+                chicken.play();
             }
             else if(puter == 1) {
                 mesh3.visible = true;

@@ -1,61 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Game Start Screen</title>
+    <link rel="stylesheet" href="css.css">
+    <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet"> 
     <style>
         body {
             margin: 0px;
             overflow: hidden;
         }
-
-        #divCountdownBar {
-            position: fixed;
-            left: 480px;
-            /* left: 40%; */
-            top: 130px;
-            width: 236px;
-            height: 10px;
-            border-collapse: 2px solid black;
-            background: white;
-        }
-
-        #divTimeLeft {
-            float: right;
-            background: black;
-            height: 10px;
-        }
     </style>
-    <script type="text/javascript">
-        function initBarCount() {
-            var divCountdownBar = document.getElementById("divCountdownBar");
-            var divTimeLeft = document.getElementById("divTimeLeft");
-            var startTimer = setInterval(barCount, 75);
-            function barCount() {
-                if(divTimeLeft.clientWidth < divCountdownBar.clientWidth) {
-                    divTimeLeft.style.width = divTimeLeft.clientWidth + 2.95 + "px";
-                }
-                else {
-                    divTimeLeft.style.width = divCountdownBar.clientWidth + "px";
-                    clearInterval(startTimer);
-                }
-            }
-        }
+    <script>
+        var title = new Audio('assets/title_laugh.mp3');
+        title.loop = true;
+        title.play();
     </script>
-    <script type="text/javascript" src="timerdiy.js"></script>
 </head>
-
-<body onkeydown="initBarCount()">
-    <div id="WebGL-output"></div>
-    <div id="divCountdownBar">
-        <div id="divTimeLeft">
-
-        </div>
+<body>
+    <div>
+        <p id="p1">Til' We</p> <p id="p2"> D I E </p>
+        <a href="game.html" id="p3" style="text-decoration: none;"> Start the Game</a>
     </div>
-    <script type="text/javascript" src="build/three.min.js"></script>
-    <script src="build/GLTFLoader.js"></script>
-    <script type="text/javascript" src="index.js"></script>
 </body>
 </html>

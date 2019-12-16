@@ -37,7 +37,7 @@ function Decrement() {
 }
 function kalahalert() {
     if(kalah == 1) {
-        alert("Ayo lebih cepat lagi!");
+        alert("RAN for your life!");
         document.location.reload();
         score = 0;
         kalah = 0;
