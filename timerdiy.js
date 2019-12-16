@@ -19,10 +19,10 @@ function Decrement() {
         milseconds.value = milsecs;
     } else {
         dispsec = getseconds();
-        console.log(dispsec)
+        // console.log(dispsec)
         dispsec = getmilseconds();
         // dispmil = getmilseconds();
-        console.log(dispsec)
+        // console.log(dispsec)
     }
     milsecs-=4;
     if(!(milsecs < 0))
@@ -31,13 +31,13 @@ function Decrement() {
     }
     else {
         kalah = 1;
-        kalahlaert();
+        kalahalert();
         // console.log('CHECKPOINT')
     }
 }
-function kalahlaert() {
+function kalahalert() {
     if(kalah == 1) {
-        alert("CUPU");
+        alert("Ayo lebih cepat lagi!");
         document.location.reload();
         score = 0;
         kalah = 0;
@@ -45,7 +45,7 @@ function kalahlaert() {
 }
 
 function countdown() {
-    secs = 3;
+    secs = 6;
     milsecs = secs * 1000;
     setTimeout('Decrement()',1);
 }

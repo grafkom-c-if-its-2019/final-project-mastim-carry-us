@@ -136,7 +136,7 @@
         // mesh.position.x = -3.5;
         mesh2.position.z = 13;
         mesh2.position.y = 8;
-        mesh2.position.x = -4;
+        // mesh2.position.x = -4;
 
         mesh2.rotation.x -= Math.PI / 2;
 
@@ -161,35 +161,35 @@
 
     function timer() {
         countdown();
-        var textGeometry3 = new THREE.TextGeometry('Time: '+ dispsec, {
-            font : font,
-            size : 1,
-            height: 0.1,
-            curveSegments: 0,
-            bevelThickness: 0,
-            bevelSize: 0,
-            bevelEnabled: false
-        });
-        textGeometry3.computeBoundingBox();
-        textGeometry3.center();
+        // var textGeometry3 = new THREE.TextGeometry('Time: '+ dispsec, {
+        //     font : font,
+        //     size : 1,
+        //     height: 0.1,
+        //     curveSegments: 0,
+        //     bevelThickness: 0,
+        //     bevelSize: 0,
+        //     bevelEnabled: false
+        // });
+        // textGeometry3.computeBoundingBox();
+        // textGeometry3.center();
 
-        textMaterial3 = new THREE.MeshLambertMaterial( 
-            { color: 0xffffff, specular: 0xffffff }
-        );
+        // textMaterial3 = new THREE.MeshLambertMaterial( 
+        //     { color: 0xffffff, specular: 0xffffff }
+        // );
 
-        mesh4 = new THREE.Mesh( textGeometry3, textMaterial3 );
+        // mesh4 = new THREE.Mesh( textGeometry3, textMaterial3 );
 
-        // mesh.position.x = -3.5;
-        mesh4.position.z = 13;
-        mesh4.position.y = 8;
-        mesh4.position.x = 4;
+        // // mesh.position.x = -3.5;
+        // mesh4.position.z = 13;
+        // mesh4.position.y = 8;
+        // mesh4.position.x = 4;
 
-        mesh4.rotation.x -= Math.PI / 2;
+        // mesh4.rotation.x -= Math.PI / 2;
 
-        scene.add( mesh4 );
+        // scene.add( mesh4 );
     }
 
-    load_font3();
+    // load_font3();
 
     loader4.load('assets/scene.gltf', function (gltf){
        
@@ -238,6 +238,8 @@
     var rotateLeft = false, rotateRight, rotateTop, rotateBottom;
     var clicked = 0;
     var degree = 0;
+    var coba = document.getElementById("divTimeLeft");
+    var prev;
 
     function onDocumentKeyUp(event) {
         clicked = 0;
@@ -247,6 +249,7 @@
         clicked += 1
         // console.log(clicked);
         if(clicked == 1) {
+            prev = coba.style.width;
             if(numOfNot % 2 == 0) {
                 if (keyCode == 37 && degree == 0 && perintah[0] == 'L') {
                     mesh3.rotation.y += Math.PI / 2;
@@ -276,7 +279,7 @@
                     //resetTimer();
                 }
                 else {
-                    alert("CUPU");
+                    alert("KONSENTRASI YA");
                     document.location.reload();
                     // clearInterval(interval);
                     score = 0;
@@ -311,7 +314,7 @@
                     //resetTimer();
                 }
                 else {
-                    alert("CUPU");
+                    alert("FOKUS FOKUS");
                     document.location.reload();
                     // clearInterval(interval);
                     score = 0;
@@ -322,12 +325,19 @@
         event.preventDefault();
     };
 
-    var puter = 0, jalan = 0;
+    var puter = 0, jalan = 0, masuk = 0;
   
     render();
     function render() {
         requestAnimationFrame(render);
+        console.log(coba.style.width);
+        if(coba.style.width == "236px" && masuk == 0) {
+            masuk = 1;
+            alert("SKOR ANDA " + score);
+            document.location.reload();
+        }
         if(rotateTop && degree < Math.PI / 2) {
+            coba.style.width = prev;
             if(puter == 1) {
                 jalan = 0;
                 var deltaRotationQuaternion = new THREE.Quaternion()
@@ -354,6 +364,7 @@
             }
         }
         else if(rotateBottom && degree < Math.PI / 2) {
+            coba.style.width = prev;
             if(puter == 1) {
                 jalan = 0;
                 var deltaRotationQuaternion = new THREE.Quaternion()
@@ -381,6 +392,7 @@
             
         }
         else if(rotateLeft && degree < Math.PI / 2) {
+            coba.style.width = prev;
             if(puter == 1) {
                 jalan = 0;
                 var deltaRotationQuaternion = new THREE.Quaternion()
@@ -408,6 +420,7 @@
             
         }
         else if(rotateRight && degree < Math.PI / 2) {
+            coba.style.width = prev;
             if(puter == 1) {
                 jalan = 0;
                 var deltaRotationQuaternion = new THREE.Quaternion()
@@ -435,6 +448,7 @@
             
         }
         if(degree >= Math.PI / 2) {
+            coba.style.width = "0px";
             if(puter == 0) {
                 if(rotateBottom) {
                     mesh3.rotation.y += Math.PI;
@@ -465,7 +479,7 @@
                 console.log(text);
                 updateText(text);
                 removeText(mesh2);
-                removeText(mesh4);
+                // removeText(mesh4);
                 updateScore();
                 resetTimer();
             }

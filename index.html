@@ -10,12 +10,50 @@
             margin: 0px;
             overflow: hidden;
         }
+
+        #divCountdownBar {
+            position: fixed;
+            left: 480px;
+            /* left: 40%; */
+            top: 130px;
+            width: 236px;
+            height: 10px;
+            border-collapse: 2px solid black;
+            background: white;
+        }
+
+        #divTimeLeft {
+            float: right;
+            background: black;
+            height: 10px;
+        }
     </style>
+    <script type="text/javascript">
+        function initBarCount() {
+            var divCountdownBar = document.getElementById("divCountdownBar");
+            var divTimeLeft = document.getElementById("divTimeLeft");
+            var startTimer = setInterval(barCount, 75);
+            function barCount() {
+                if(divTimeLeft.clientWidth < divCountdownBar.clientWidth) {
+                    divTimeLeft.style.width = divTimeLeft.clientWidth + 2.95 + "px";
+                }
+                else {
+                    divTimeLeft.style.width = divCountdownBar.clientWidth + "px";
+                    clearInterval(startTimer);
+                }
+            }
+        }
+    </script>
     <script type="text/javascript" src="timerdiy.js"></script>
 </head>
 
-<body>
+<body onkeydown="initBarCount()">
     <div id="WebGL-output"></div>
+    <div id="divCountdownBar">
+        <div id="divTimeLeft">
+
+        </div>
+    </div>
     <script type="text/javascript" src="build/three.min.js"></script>
     <script src="build/GLTFLoader.js"></script>
     <script type="text/javascript" src="index.js"></script>
