@@ -285,7 +285,7 @@
                 }
                 else {
                     laugh.play();
-                    alert("You Died");
+                    alert("Lain kali lebih hati-hati. Kesempatan tidak datang dua kali");
                     document.location.reload();
                     // clearInterval(interval);
                     score = 0;
@@ -321,7 +321,7 @@
                 }
                 else {
                     laugh.play();
-                    alert("Awas Sekitarmu");
+                    alert("Awas Sekitarmu. Dunia itu luas, tidak semua berpihak padamu");
                     document.location.reload();
                     // clearInterval(interval);
                     score = 0;
@@ -340,7 +340,7 @@
         console.log(coba.style.width);
         if(coba.style.width == "236px" && masuk == 0) {
             masuk = 1;
-            alert("SKOR ANDA " + score);
+            alert("SKOR ANDA " + score + "\nSELAMAT YA!");
             laugh.play();
             document.location.reload();
         }
